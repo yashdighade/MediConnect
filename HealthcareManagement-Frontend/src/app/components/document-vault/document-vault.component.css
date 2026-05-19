@@ -1,0 +1,61 @@
+.heading {
+  text-align: center;
+  margin: 18px 0;
+  font-family: 'Aladin', cursive;
+  color: rgb(7, 54, 54);
+}
+
+.document-vault-container {
+  max-width: 980px;
+  margin: 0 auto 40px;
+  padding: 0 12px;
+}
+
+.vault-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: 5px 5px 35px 8px rgb(147, 158, 147);
+}
+
+.vault-title { color: rgb(7, 54, 54); margin-bottom: 6px; }
+.vault-subtitle { color: #4d4d4d; margin-bottom: 14px; }
+
+.file-input-wrapper { display:flex; align-items:center; gap:12px; }
+.file-input { display:none; }
+.file-label { background: rgb(13, 53, 80); color:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; }
+.file-name { font-size:0.95rem; color:#333; }
+.upload-btn { background: rgb(13, 53, 80); color:#fff; border-radius:8px; margin-left:8px; }
+
+.alert-custom { border-radius:8px; margin-top:12px; }
+
+.documents-section { margin-top: 8px; }
+.section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.section-title { font-family: 'Aladin', cursive; color: rgb(7, 54, 54); margin:0; }
+.document-count { color:#666; font-size:0.95rem; }
+
+.documents-list { display:flex; flex-direction:column; gap:12px; }
+.document-card { background:#fff; border-radius:10px; padding:12px; display:flex; justify-content:space-between; align-items:center; box-shadow: 2px 4px 18px rgba(0,0,0,0.06); }
+.document-header { display:flex; align-items:center; gap:14px; }
+.doc-icon { width:48px; height:48px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; }
+.icon-pdf { background:#d9534f; }
+.icon-image { background:#5bc0de; }
+.icon-file { background:#6c757d; }
+.doc-info { min-width:350px; }
+.doc-name { margin:0; font-weight:600; color:#073636; }
+.doc-meta { margin:4px 0 0; color:#777; font-size:0.9rem; }
+.doc-size, .doc-type, .doc-date { margin-right:10px; }
+
+.document-actions { display:flex; gap:8px; }
+.btn-download { background: #198754; color:#fff; border-radius:8px; padding:8px 12px; border:none; }
+.btn-delete { background: #dc3545; color:#fff; border-radius:8px; padding:8px 12px; border:none; }
+
+.empty-state { text-align:center; padding:28px; color:#666; border:2px dashed #e6e6e6; border-radius:10px; }
+.empty-state i { font-size:32px; display:block; margin-bottom:8px; }
+
+@media (max-width: 720px) {
+  .doc-info { min-width:120px; }
+  .document-card { flex-direction:column; align-items:flex-start; gap:10px; }
+  .document-actions { width:100%; justify-content:flex-end; }
+}
