@@ -22,17 +22,13 @@ export class UserdashboardComponent implements OnInit {
 
   ngOnInit(): void 
   {
-    this.name = JSON.stringify(sessionStorage.getItem('ROLE')|| '{}');
-    this.name = this.name.replace(/"/g, '');
+    this.name = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
 
-    this.gender = JSON.stringify(sessionStorage.getItem('gender')|| '{}');
-    this.gender = this.gender.replace(/"/g, '');
+    this.gender = (sessionStorage.getItem('gender') || '').replace(/"/g, '');
 
-    this.loggedUser = JSON.stringify(sessionStorage.getItem('loggedUser')|| '{}');
-    this.loggedUser = this.loggedUser.replace(/"/g, '');
+    this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
 
-    this.currRole = JSON.stringify(sessionStorage.getItem('ROLE')|| '{}'); 
-    this.currRole = this.currRole.replace(/"/g, '');
+    this.currRole = (sessionStorage.getItem('ROLE') || '').replace(/"/g, '');
 
     this.patients = this._service.getTotalPatients();
     this.users = this._service.getTotalUsers();

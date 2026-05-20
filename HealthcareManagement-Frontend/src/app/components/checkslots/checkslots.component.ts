@@ -18,11 +18,9 @@ export class CheckslotsComponent implements OnInit {
 
   ngOnInit(): void
   {
-    this.loggedUser = JSON.stringify(sessionStorage.getItem('loggedUser')|| '{}');
-    this.loggedUser = this.loggedUser.replace(/"/g, '');
+    this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
 
-    this.currRole = JSON.stringify(sessionStorage.getItem('ROLE')|| '{}'); 
-    this.currRole = this.currRole.replace(/"/g, '');
+    this.currRole = (sessionStorage.getItem('ROLE') || '').replace(/"/g, '');
 
     this.slots = this._service.getSlotList();
 
