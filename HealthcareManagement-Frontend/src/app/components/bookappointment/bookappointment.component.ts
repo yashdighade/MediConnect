@@ -29,7 +29,11 @@ export class BookappointmentComponent implements OnInit {
   constructor(private _service: DoctorService, private _router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.loggedUser = (localStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.appointment.patientname = localStorage.getItem('name') || '';
+    this.appointment.email = this.loggedUser;
+    this.appointment.gender = localStorage.getItem('gender') || '';
+    this.appointment.age = localStorage.getItem('age') || '';
 
     // Load accepted doctors — handle both 'accept' (from approval flow) and 'Approved' (seeded data)
     this._service.getDoctorList().subscribe((data: any[]) => {
@@ -110,6 +114,7 @@ export class BookappointmentComponent implements OnInit {
 
   bookAppointment(): void {
     this.message = '';
+    this.appointment.email = this.loggedUser;
     this.userService.addBookingAppointments(this.appointment).subscribe(
       () => this._router.navigate(['/userdashboard']),
       error => {

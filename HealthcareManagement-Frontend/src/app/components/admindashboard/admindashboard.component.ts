@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
@@ -25,13 +25,13 @@ export class AdmindashboardComponent implements OnInit {
 
   ngOnInit(): void 
   {
-    this.name = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.name = (localStorage.getItem('loggedUser') || '').replace(/"/g, '');
 
-    this.gender = (sessionStorage.getItem('gender') || '').replace(/"/g, '');
+    this.gender = (localStorage.getItem('gender') || '').replace(/"/g, '');
 
-    this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.loggedUser = (localStorage.getItem('loggedUser') || '').replace(/"/g, '');
 
-    this.currRole = (sessionStorage.getItem('ROLE') || '').replace(/"/g, '');
+    this.currRole = (localStorage.getItem('ROLE') || '').replace(/"/g, '');
 
     this.patients = this._service.getTotalPatients();
     this.users = this._service.getTotalUsers();

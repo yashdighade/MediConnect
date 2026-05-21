@@ -49,7 +49,7 @@
             <td>{{doctor.previoushospital}}</td>
             <td>{{doctor.mobile}}</td>
             <td>
-              <div *ngIf="loggedUser === 'admin@gmail.com' && doctor.status === 'false'" class="action-btns">
+              <div *ngIf="currRole === 'admin' && doctor.status === 'false'" class="action-btns">
                 <button (click)="acceptRequest(doctor.email)"
                         [disabled]="actionInProgress[doctor.email]"
                         class="btn-accept">
@@ -63,7 +63,7 @@
               </div>
               <span *ngIf="doctor.status === 'accept'" class="status-pill accepted">&#10003; Accepted</span>
               <span *ngIf="doctor.status === 'reject'" class="status-pill rejected">&#10007; Rejected</span>
-              <span *ngIf="doctor.status === 'false' && loggedUser !== 'admin@gmail.com'" class="status-pill pending">Pending</span>
+              <span *ngIf="doctor.status === 'false' && currRole !== 'admin'" class="status-pill pending">Pending</span>
             </td>
           </tr>
           <tr *ngIf="doctors.length === 0">

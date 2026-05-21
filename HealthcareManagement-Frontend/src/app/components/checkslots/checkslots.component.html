@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let doctor of slots | async">
+        <tr *ngFor="let doctor of slots">
 
           <td><span class="date-pill">{{doctor.date}}</span></td>
           <td class="doc-name">{{doctor.doctorname}}</td>
@@ -56,7 +56,7 @@
       </tbody>
     </table>
 
-    <div class="slots-empty" *ngIf="(slots | async)?.length === 0">
+    <div class="slots-empty" *ngIf="slots.length === 0">
       <i class="fa fa-calendar-times-o"></i>
       <p>No slots available at the moment.</p>
     </div>

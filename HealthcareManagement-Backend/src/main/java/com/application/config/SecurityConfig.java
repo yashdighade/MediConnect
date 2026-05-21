@@ -15,7 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
@@ -39,7 +39,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -73,7 +73,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
                 "/patientlistbydoctoremailanddate/**", "/userlist", "/getprescriptionbyname/**", 
                 "/patientlistbyemail/**", "/patientlist", "/gettotalpatients", 
                 "/gettotalappointments", "/gettotalprescriptions", "/profileDetails/**", 
-                "/updateuser", "/bookNewAppointment", "/updateAppointmentStatus/**"
+                "/updateuser", "/bookNewAppointment", "/updateAppointmentStatus/**", "/loginadmin", "/registeradmin"
             ).permitAll()
             .anyRequest().authenticated())
         .exceptionHandling(exception -> exception.accessDeniedHandler(new AccessDeniedHandlerImpl()))

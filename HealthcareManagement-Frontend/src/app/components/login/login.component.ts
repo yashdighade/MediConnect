@@ -18,9 +18,16 @@ export class LoginComponent implements OnInit {
   adminPassword = "";
   activeTab: 'user' | 'doctor' | 'admin' = 'user';
 
-  constructor(private _service : LoginService, private _router : Router) { }
+  constructor(private _service: LoginService, private _router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this._service.isLoggedIn()) {
+      const role = this._service.userType();
+      if (role === 'admin') this._router.navigate(['/admindashboard']);
+      else if (role === 'doctor') this._router.navigate(['/doctordashboard']);
+      else this._router.navigate(['/userdashboard']);
+    }
+  }
 
   switchTab(tab: 'user' | 'doctor' | 'admin') {
     this.activeTab = tab;
@@ -32,12 +39,12 @@ export class LoginComponent implements OnInit {
       this._service.loginUserFromRemote(this.user).subscribe(
         (data: any) => {
           console.log(data);
-          console.log("Response Received");
-          sessionStorage.setItem('loggedUser', this.user.email);
-          sessionStorage.setItem('USER', "user");
-          sessionStorage.setItem('ROLE', "user");
-          sessionStorage.setItem('name', this.user.email);
-          sessionStorage.setItem('gender', "male");
+          localStorage.setItem('loggedUser', this.user.email);
+          localStorage.setItem('USER', this.user.email);
+          localStorage.setItem('ROLE', 'user');
+          localStorage.setItem('name', data.username || this.user.email);
+          localStorage.setItem('gender', data.gender || '');
+          localStorage.setItem('age', data.age || '');
           this._router.navigate(['/userdashboard']);
         },
         (error: { error: any; }) => {
@@ -52,13 +59,12 @@ export class LoginComponent implements OnInit {
       this._service.loginDoctorFromRemote(this.doctor).subscribe(
         (data: any) => {
           console.log(data);
-          console.log("Response Received");
-          sessionStorage.clear();
-          sessionStorage.setItem('loggedUser', this.doctor.email);
-          sessionStorage.setItem('USER', "doctor");
-          sessionStorage.setItem('ROLE', "doctor");
-          sessionStorage.setItem('doctorname',this.doctor.email);
-          sessionStorage.setItem('gender', "male");
+          localStorage.clear();
+          localStorage.setItem('loggedUser', this.doctor.email);
+          localStorage.setItem('USER', this.doctor.email);
+          localStorage.setItem('ROLE', 'doctor');
+          localStorage.setItem('doctorname', this.doctor.email);
+          localStorage.setItem('gender', 'male');
           this._router.navigate(['/doctordashboard']);
         },
         (error: { error: any; }) => {
@@ -70,20 +76,20 @@ export class LoginComponent implements OnInit {
 
   adminLogin()
   {
-    if(this._service.adminLoginFromRemote(this.adminEmail, this.adminPassword)) 
-    {
-      sessionStorage.setItem('loggedUser', this.adminEmail);
-      sessionStorage.setItem('USER', "admin");
-      sessionStorage.setItem('ROLE', "admin");
-      sessionStorage.setItem('name', "admin");
-      sessionStorage.setItem('gender', "male");
-      this._router.navigate(['/admindashboard']);
-    }
-    else 
-    {
-      console.log("Exception Occured");
-      this.msg = 'Bad admin credentials !!!'
-    }
+    this._service.adminLoginFromRemote(this.adminEmail, this.adminPassword).subscribe(
+      (data: any) => {
+        localStorage.setItem('loggedUser', this.adminEmail);
+        localStorage.setItem('USER', 'admin');
+        localStorage.setItem('ROLE', 'admin');
+        localStorage.setItem('name', data.adminname || 'Admin');
+        localStorage.setItem('gender', 'male');
+        this._router.navigate(['/admindashboard']);
+      },
+      (error: any) => {
+        console.log(error);
+        this.msg = 'Bad admin credentials!!!';
+      }
+    );
   }
 
 }

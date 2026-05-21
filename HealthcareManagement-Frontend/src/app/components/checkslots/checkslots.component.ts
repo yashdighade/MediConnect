@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Slots } from 'src/app/models/slots';
 import { DoctorService } from 'src/app/services/doctor.service';
 
@@ -12,18 +11,22 @@ export class CheckslotsComponent implements OnInit {
 
   currRole = '';
   loggedUser = '';
-  slots : Observable<Slots[]> | undefined;
-  
+  slots: Slots[] = [];
+
   constructor(private _service : DoctorService) { }
 
   ngOnInit(): void
   {
-    this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.loggedUser = (localStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.currRole = (localStorage.getItem('ROLE') || '').replace(/"/g, '');
 
-    this.currRole = (sessionStorage.getItem('ROLE') || '').replace(/"/g, '');
-
-    this.slots = this._service.getSlotList();
-
+    this._service.getSlotList().subscribe((data: Slots[]) => {
+      // Only show slots that have a doctor name and at least one available slot
+      this.slots = data.filter(s =>
+        s.doctorname && s.doctorname.trim() !== '' &&
+        s.specialization && s.specialization.trim() !== ''
+      );
+    });
   }
 
 }

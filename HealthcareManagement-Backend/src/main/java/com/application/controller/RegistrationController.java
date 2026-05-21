@@ -17,6 +17,7 @@ import com.application.model.Slots;
 import com.application.model.User;
 import com.application.service.DoctorRegistrationService;
 import com.application.service.UserRegistrationService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 public class RegistrationController 
@@ -26,6 +27,9 @@ public class RegistrationController
 	
 	@Autowired
 	private DoctorRegistrationService doctorRegisterService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@PostMapping({"/registerUser", "/registeruser"})
 	public ResponseEntity<?> registerUser(@RequestBody User user)
@@ -42,6 +46,7 @@ public class RegistrationController
 					return new ResponseEntity<>("User with "+currEmail+" already exists !!!", HttpStatus.CONFLICT);
 				}
 			}
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User userObj = userRegisterService.saveUser(user);
 		return new ResponseEntity<User>(userObj, HttpStatus.OK);
 	}
@@ -61,6 +66,7 @@ public class RegistrationController
 					return new ResponseEntity<>("Doctor with "+currEmail+" already exists !!!", HttpStatus.CONFLICT);
 				}
 			}
+		doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
 		Doctor doctorObj = doctorRegisterService.saveDoctor(doctor);
 		return new ResponseEntity<Doctor>(doctorObj, HttpStatus.OK);
 	}

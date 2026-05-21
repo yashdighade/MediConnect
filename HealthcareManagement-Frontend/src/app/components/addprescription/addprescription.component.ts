@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Appointment } from 'src/app/models/appointment';
@@ -26,8 +26,8 @@ export class AddprescriptionComponent implements OnInit
 
   ngOnInit(): void
   {
-    this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
-    this.currRole = (sessionStorage.getItem('ROLE') || '').replace(/"/g, '');
+    this.loggedUser = (localStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.currRole = (localStorage.getItem('ROLE') || '').replace(/"/g, '');
 
     this.appointment = this._service.getPatientListByDoctorEmail(this.loggedUser);
 

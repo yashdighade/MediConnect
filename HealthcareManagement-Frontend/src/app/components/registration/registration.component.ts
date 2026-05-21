@@ -41,8 +41,8 @@ export class RegistrationComponent implements OnInit {
     this._registrationService.registerUserFromRemote(this.user).subscribe(
       data => {
         console.log("Registration Success");
-        sessionStorage.setItem("username",this.user.username);
-        sessionStorage.setItem("gender",this.user.gender);
+        localStorage.setItem("username",this.user.username);
+        localStorage.setItem("gender",this.user.gender);
         this._router.navigate(['/registrationsuccess']);
       },
     error => {
@@ -69,8 +69,8 @@ export class RegistrationComponent implements OnInit {
     this._registrationService.registerDoctorFromRemote(this.doctor).subscribe(
       data => {
         console.log("Registration Success");
-        sessionStorage.setItem("doctorname",this.doctor.doctorname);
-        sessionStorage.setItem("gender",this.doctor.gender);
+        localStorage.setItem("doctorname",this.doctor.doctorname);
+        localStorage.setItem("gender",this.doctor.gender);
         this._router.navigate(['/registrationsuccess']);
       },
       error => {

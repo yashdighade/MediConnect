@@ -19,6 +19,7 @@ import com.application.model.User;
 import com.application.service.DoctorRegistrationService;
 import com.application.service.UserRegistrationService;
 import com.application.util.JwtUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 public class LoginController 
@@ -35,6 +36,9 @@ public class LoginController
 	
 	@Autowired
 	private DoctorRegistrationService doctorRegisterService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/")
     public String welcomeMessage()
@@ -72,11 +76,15 @@ public class LoginController
 	{
 		String currEmail = user.getEmail();
 		String currPassword = user.getPassword();
-		
+
 		User userObj = null;
 		if(currEmail != null && currPassword != null)
 		{
-			userObj = userRegisterService.fetchUserByEmailAndPassword(currEmail, currPassword);
+			userObj = userRegisterService.fetchUserByEmail(currEmail);
+			if(userObj == null || !passwordEncoder.matches(currPassword, userObj.getPassword()))
+			{
+				userObj = null;
+			}
 		}
 		if(userObj == null)
 		{
@@ -94,7 +102,11 @@ public class LoginController
 		Doctor doctorObj = null;
 		if(currEmail != null && currPassword != null)
 		{
-			doctorObj = doctorRegisterService.fetchDoctorByEmailAndPassword(currEmail, currPassword);
+			doctorObj = doctorRegisterService.fetchDoctorByEmail(currEmail);
+			if(doctorObj == null || !passwordEncoder.matches(currPassword, doctorObj.getPassword()))
+			{
+				doctorObj = null;
+			}
 		}
 		if(doctorObj == null)
 		{

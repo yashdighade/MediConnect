@@ -23,10 +23,10 @@ export class PatientlistComponent implements OnInit {
 
   // ngOnInit(): void
   // {
-  //   this.loggedUser = JSON.stringify(sessionStorage.getItem('loggedUser')|| '{}');
+  //   this.loggedUser = JSON.stringify(localStorage.getItem('loggedUser')|| '{}');
   //   this.loggedUser = this.loggedUser.replace(/"/g, '');
 
-  //   this.currRole = JSON.stringify(sessionStorage.getItem('ROLE')|| '{}'); 
+  //   this.currRole = JSON.stringify(localStorage.getItem('ROLE')|| '{}'); 
   //   this.currRole = this.currRole.replace(/"/g, '');
 
   //   if(this.currRole === "user")
@@ -41,8 +41,8 @@ export class PatientlistComponent implements OnInit {
   // }
 ngOnInit(): void {
   // Clean up session retrieval
-  this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
-  this.currRole = (sessionStorage.getItem('ROLE') || '').replace(/"/g, '');
+  this.loggedUser = (localStorage.getItem('loggedUser') || '').replace(/"/g, '');
+  this.currRole = (localStorage.getItem('ROLE') || '').replace(/"/g, '');
 
   // FIX: Change "user" to "doctor" (or "DOCTOR" based on your storage)
   console.log("Current Role from session:", this.currRole); // Debugging line

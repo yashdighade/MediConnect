@@ -12,7 +12,7 @@ export class DoctorGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) 
   {
-    if (this._service.isUserLoggedIn() && this._service.userType() === 'doctor' || this._service.userType() === 'Doctor') 
+    if (this._service.isDoctorLoggedIn()) 
     {
       return true;
     }

@@ -26,7 +26,8 @@
           <label>Patient Name <span class="req">*</span></label>
           <input type="text" class="form-control" placeholder="Full name with initial"
             name="patientname" [(ngModel)]="appointment.patientname" required
-            #patientname="ngModel" [class.is-invalid]="patientname.invalid && patientname.touched">
+            #patientname="ngModel" [class.is-invalid]="patientname.invalid && patientname.touched"
+            readonly style="background-color:#f5f5f5;cursor:not-allowed">
           <small class="field-err" *ngIf="patientname.invalid && patientname.touched">Required</small>
         </div>
         <div class="appt-field">
@@ -34,7 +35,8 @@
           <input type="email" class="form-control" placeholder="Valid email address"
             name="patientemail" [(ngModel)]="appointment.email" required
             pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
-            #patientemail="ngModel" [class.is-invalid]="patientemail.invalid && patientemail.touched">
+            #patientemail="ngModel" [class.is-invalid]="patientemail.invalid && patientemail.touched"
+            readonly style="background-color:#f5f5f5;cursor:not-allowed">
           <small class="field-err" *ngIf="patientemail.errors?.required && patientemail.touched">Required</small>
           <small class="field-err" *ngIf="patientemail.errors?.pattern && patientemail.touched">Invalid email</small>
         </div>
@@ -42,12 +44,13 @@
           <label>Age <span class="req">*</span></label>
           <input type="text" class="form-control" placeholder="Patient age"
             name="age" [(ngModel)]="appointment.age" required
-            #age="ngModel" [class.is-invalid]="age.invalid && age.touched">
+            #age="ngModel" [class.is-invalid]="age.invalid && age.touched"
+            readonly style="background-color:#f5f5f5;cursor:not-allowed">
           <small class="field-err" *ngIf="age.invalid && age.touched">Required</small>
         </div>
         <div class="appt-field">
           <label>Gender <span class="req">*</span></label>
-          <select class="form-control" name="gender" [(ngModel)]="appointment.gender">
+          <select class="form-control" name="gender" [(ngModel)]="appointment.gender" disabled style="background-color:#f5f5f5;cursor:not-allowed">
             <option value="" disabled>Select gender</option>
             <option>Male</option>
             <option>Female</option>

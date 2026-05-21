@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Prescription } from 'src/app/models/prescription';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,7 +17,7 @@ export class PrescriptionlistComponent implements OnInit {
   constructor(private _service : UserService) { }
 
   ngOnInit(): void {
-    this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.loggedUser = (localStorage.getItem('loggedUser') || '').replace(/"/g, '');
 
     // First try to get the patientname from the user's own appointments
     // (prescriptions are saved using appointment.patientname, not registration username)

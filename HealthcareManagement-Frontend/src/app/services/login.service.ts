@@ -17,87 +17,72 @@ export class LoginService {
   doctor = new Doctor();
 
   constructor(private _http : HttpClient) { }
-  
+
   public loginUserFromRemote(user : User)
   {
-  return this._http.post<any>(`${NAV_URL}/loginuser`,user).pipe(
-    map(
-      data => {
-        sessionStorage.setItem('USER', user.email);
-        sessionStorage.setItem('ROLE', 'USER');
-        sessionStorage.setItem('TOKEN', `Bearer ${data.token}`);
-        return data;
+    return this._http.post<any>(`${NAV_URL}/loginuser`, user).pipe(
+      map(data => {
+        localStorage.setItem('USER', user.email);
+        localStorage.setItem('ROLE', 'user');
+        if (data && data.token) {
+          localStorage.setItem('TOKEN', `Bearer ${data.token}`);
+        } else {
+          localStorage.removeItem('TOKEN');
         }
-      )
-    );        
+        return data;
+      })
+    );
   }
 
   public loginDoctorFromRemote(doctor : Doctor)
   {
-    console.log(doctor);
-    return this._http.post<any>(`${NAV_URL}/logindoctor`,doctor).pipe(
-    map(
-      data => {
-        sessionStorage.setItem('USER', doctor.email);
-        sessionStorage.setItem('ROLE', 'DOCTOR');
-        sessionStorage.setItem('TOKEN', `Bearer ${data.token}`);
-        return data;
+    return this._http.post<any>(`${NAV_URL}/logindoctor`, doctor).pipe(
+      map(data => {
+        localStorage.setItem('USER', doctor.email);
+        localStorage.setItem('ROLE', 'doctor');
+        if (data && data.token) {
+          localStorage.setItem('TOKEN', `Bearer ${data.token}`);
+        } else {
+          localStorage.removeItem('TOKEN');
         }
-      )
-    ); 
+        return data;
+      })
+    );
   }
 
-isUserLoggedIn()
-{
-  let user = sessionStorage.getItem('USER');
-  if(user === null || user.length === 0) 
-  {
-      return false;
+  /** True when USER and ROLE are both set */
+  isLoggedIn(): boolean {
+    const user = localStorage.getItem('USER');
+    const role = localStorage.getItem('ROLE');
+    return !!user && user.length > 0 && !!role && role.length > 0;
   }
-  return true;
-}
 
-isDoctorLoggedIn()
-{
-  let user = sessionStorage.getItem('USER');
-  if(user === null || user.length === 0) 
-  {
-      return false;
+  isUserLoggedIn(): boolean {
+    return this.isLoggedIn() && (localStorage.getItem('ROLE') || '').toLowerCase() === 'user';
   }
-  return true;
-}
 
-isAdminLoggedIn()
-{
-  let user = sessionStorage.getItem('USER');
-  if(user === null || user.length === 0) 
-  {
-      return false;
+  isDoctorLoggedIn(): boolean {
+    return this.isLoggedIn() && (localStorage.getItem('ROLE') || '').toLowerCase() === 'doctor';
   }
-  return true;
-}
 
-getAuthenticatedToken() {
-  return sessionStorage.getItem('TOKEN');
-}
-
-getAuthenticatedUser() {
-  return sessionStorage.getItem('USER');
-}
-
-userType() {
-    return sessionStorage.getItem('ROLE');
-}
-
-public adminLoginFromRemote(email: string, password: string)
-{
-  if(email === 'admin@gmail.com' && password === 'admin123') 
-  {
-    sessionStorage.setItem('user', email);
-    sessionStorage.setItem('ROLE', "admin");
-    return true;
+  isAdminLoggedIn(): boolean {
+    return this.isLoggedIn() && (localStorage.getItem('ROLE') || '').toLowerCase() === 'admin';
   }
-  return false;
-}
+
+  getAuthenticatedToken() {
+    return localStorage.getItem('TOKEN');
+  }
+
+  getAuthenticatedUser() {
+    return localStorage.getItem('USER');
+  }
+
+  userType() {
+    return (localStorage.getItem('ROLE') || '').toLowerCase();
+  }
+
+  public adminLoginFromRemote(email: string, password: string): Observable<any> {
+    return this._http.post<any>(`${NAV_URL}/loginadmin`, { email, password });
+  }
 
 }

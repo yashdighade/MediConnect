@@ -23,12 +23,13 @@ import { UserprofileComponent } from './components/userprofile/userprofile.compo
 import { WelcomepageComponent } from './components/welcomepage/welcomepage.component';
 import { AdminGuard } from './guards/admin.guard';
 import { DoctorGuard } from './guards/doctor.guard';
+import { LoginGuard } from './guards/login.guard';
 import { RouterGuard } from './guards/router.guard';
 import { UserGuard } from './guards/user.guard';
 
 const routes: Routes = [
   {path:'',component:WelcomepageComponent},
-  {path:'login',component:LoginComponent},
+  {path:'login',component:LoginComponent,canActivate:[LoginGuard]},
   {path:'registration',component:RegistrationComponent},
   {path:'registrationsuccess',component:RegistrationsuccessComponent},
   {path:'userdashboard',component:UserdashboardComponent,canActivate:[RouterGuard]},

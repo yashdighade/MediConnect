@@ -167,17 +167,12 @@ public class DoctorController
 	@GetMapping("/patientlistbydoctoremail/{email}")
 	public ResponseEntity<List<Appointments>> getPatientDetails(@PathVariable String email) throws Exception
 	{
-		List<Doctor> history = doctorRegisterService.getDoctorListByEmail(email);
-		String doctorname = "";
-		for(Doctor obj : history)
+		Doctor doctor = doctorRegisterService.fetchDoctorByEmail(email);
+		if (doctor == null || doctor.getDoctorname() == null || doctor.getDoctorname().isEmpty())
 		{
-			if(obj.getEmail().equals(email))
-			{
-				doctorname = obj.getDoctorname();
-				break;
-			}
+			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
 		}
-		List<Appointments> patients = appointmentBookingService.findPatientByDoctorName(doctorname);
+		List<Appointments> patients = appointmentBookingService.findPatientByDoctorName(doctor.getDoctorname());
 		return new ResponseEntity<List<Appointments>>(patients, HttpStatus.OK);
 	}
 	
@@ -229,28 +224,21 @@ public class DoctorController
 	@GetMapping("/patientlistbydoctoremailanddate/{email}")
 	public ResponseEntity<List<Appointments>> getPatientDetailsAndDate(@PathVariable String email) throws Exception
 	{
-		List<Appointments> patients = appointmentBookingService.getAllPatients();
-		List<Doctor> history = doctorRegisterService.getDoctorListByEmail(email);
-		String doctorname = "";
-		OUTER:for(Doctor obj : history)
+		Doctor doctor = doctorRegisterService.fetchDoctorByEmail(email);
+		if (doctor == null || doctor.getDoctorname() == null || doctor.getDoctorname().isEmpty())
 		{
-			if(obj.getEmail().equals(email))
-			{
-				doctorname = obj.getDoctorname();
-				break OUTER;
-			}
+			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
 		}
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-        Date date = new Date();  
-        String todayDate = formatter.format(date);
-        List<Appointments> appointmentsList = new ArrayList<>();
-		OUTER:for(Appointments obj : patients)
+		String doctorname = doctor.getDoctorname();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String todayDate = formatter.format(new Date());
+		List<Appointments> allPatients = appointmentBookingService.findPatientByDoctorName(doctorname);
+		List<Appointments> appointmentsList = new ArrayList<>();
+		for (Appointments obj : allPatients)
 		{
-			if(obj.getDoctorname().equals(doctorname) && obj.getDate().equals(todayDate))
+			if (obj.getDate() != null && obj.getDate().equals(todayDate))
 			{
-				doctorname = obj.getDoctorname();
 				appointmentsList.add(obj);
-				break OUTER;
 			}
 		}
 		return new ResponseEntity<List<Appointments>>(appointmentsList, HttpStatus.OK);

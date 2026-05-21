@@ -12,7 +12,8 @@
       </div>
       <div>
         <div class="pl-title">Patient List</div>
-        <div class="pl-sub">All appointment records across the platform</div>
+        <div class="pl-sub" *ngIf="currRole === 'doctor'">Your appointments only</div>
+        <div class="pl-sub" *ngIf="currRole !== 'doctor'">All appointment records across the platform</div>
       </div>
     </div>
 

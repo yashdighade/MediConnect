@@ -16,10 +16,10 @@ export class HeaderComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private _router: Router) { }
 
   ngOnInit(): void {
-    this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
-    this.currRole = (sessionStorage.getItem('ROLE') || '').replace(/"/g, '');
+    this.loggedUser = (localStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.currRole = (localStorage.getItem('ROLE') || '').replace(/"/g, '');
 
-    if (this.loggedUser === 'admin@gmail.com') {
+    if (this.currRole === 'admin') {
       this.title = 'Admin Dashboard';
     } else if (this.currRole === 'doctor') {
       this.title = 'Doctor Dashboard';
@@ -45,13 +45,13 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.dropdownOpen = false;
-    sessionStorage.clear();
+    localStorage.clear();
     this._router.navigate(['/login']);
   }
 
   navigateHome(): void {
     this.dropdownOpen = false;
-    if (this.loggedUser === 'admin@gmail.com') {
+    if (this.currRole === 'admin') {
       this._router.navigate(['/admindashboard']);
     } else if (this.currRole === 'doctor') {
       this._router.navigate(['/doctordashboard']);

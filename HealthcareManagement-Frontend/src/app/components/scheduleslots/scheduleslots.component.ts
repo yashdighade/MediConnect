@@ -27,7 +27,9 @@ export class ScheduleslotsComponent implements OnInit {
 
   ngOnInit(): void {
     // 1. Get Logged In Email from session
-    this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.loggedUser = (localStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    // Fallback from localStorage in case API is slow
+    this.doctorName = (localStorage.getItem('doctorname') || '').replace(/"/g, '');
 
     if (this.loggedUser) {
       // 2. Fetch actual details from DB based on email
@@ -38,8 +40,8 @@ export class ScheduleslotsComponent implements OnInit {
             console.error('No doctor found for email:', this.loggedUser);
             return;
           }
-          this.doctorName = doctor.doctorname;
-          this.specialization = doctor.specialization;
+          this.doctorName = doctor.doctorname || this.doctorName;
+          this.specialization = doctor.specialization || this.specialization;
           console.log('Doctor loaded:', this.doctorName, this.specialization);
         },
         error => {

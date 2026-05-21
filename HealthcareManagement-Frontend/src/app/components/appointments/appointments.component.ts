@@ -20,9 +20,9 @@ export class AppointmentsComponent implements OnInit {
 
   ngOnInit(): void
   {
-    this.loggedUser = (sessionStorage.getItem('loggedUser') || '').replace(/"/g, '');
+    this.loggedUser = (localStorage.getItem('loggedUser') || '').replace(/"/g, '');
 
-    this.currRole = (sessionStorage.getItem('ROLE') || '').replace(/"/g, '');
+    this.currRole = (localStorage.getItem('ROLE') || '').replace(/"/g, '');
 
     this.appointments = this._service.getPatientListByDoctorEmail(this.loggedUser);
     this.slots = this._service.getSlotDetails(this.loggedUser);

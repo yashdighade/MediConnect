@@ -65,3 +65,8 @@ INSERT INTO slots (id, amslot, amstatus, date, doctorname, email, noonslot, noon
 (14, 'AM slot', 'Booked', '2026-06-02', 'Laura Turner', 'laura.turner@medline.com', 'Noon slot', 'Booked', 'Diagnostic', 'PM slot', 'Available', 'Radiology'),
 (15, 'AM slot', 'Available', '2026-06-03', 'Brian Lopez', 'brian.lopez@healthline.com', 'Noon slot', 'Booked', 'Chronic', 'PM slot', 'Booked', 'Nephrology'),
 (16, 'AM slot', 'Booked', '2026-06-04', 'Olivia Hill', 'olivia.hill@doctorhub.com', 'Noon slot', 'Available', 'General', 'PM slot', 'Available', 'Ophthalmology');
+
+-- Admin credentials: email=admin@mediconnect.com  password=Admin@123
+INSERT IGNORE INTO admin (email, adminname, password) VALUES
+('admin@mediconnect.com', 'Super Admin', '$2a$10$v1gYLHDr6xrFnWA8NPkcEOTmjB440y/ytqdAWYzA4vo8faTy.WIji'),
+('admin2@mediconnect.com', 'Admin Two',  '$2a$10$v1gYLHDr6xrFnWA8NPkcEOTmjB440y/ytqdAWYzA4vo8faTy.WIji');
